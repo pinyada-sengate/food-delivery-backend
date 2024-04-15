@@ -1,13 +1,8 @@
-import * as express from "express";
-import * as mongoose from "mongoose";
-import { getEnviromentVariables } from "./environments/environment";
+import { Server } from "./server";
 
-let app: express.Application = express();
+let server = new Server().app;
+const PORT = process.env.PORT || 3000;
 
-app.listen(3000, () => {
-  console.log("Server is running on port 3000");
-});
-
-mongoose.connect(getEnviromentVariables().mongoURI).then(() => {
-  console.log("Connected to mongodb");
+server.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
