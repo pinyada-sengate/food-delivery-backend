@@ -1,16 +1,21 @@
+import User from "../models/User";
+
 export class UserController {
   static login(req, res, next) {
-    // const data = [{ name: "testdata" }];
-    // res.status(200).send(data);
+    const { email, password } = req.body;
 
-    // res.status(422).json({
-    //   message: "Email and password does not match",
-    //   status_code: 404,
-    // });
+    const user = new User({
+      email,
+      password,
+    });
 
-    // const error = new Error("Email and password does not match");
-    // next(error);
-
-    res.send(req.body);
+    user
+      .save()
+      .then((user) => {
+        res.send(user);
+      })
+      .catch((error) => {
+        next(error);
+      });
   }
 }
