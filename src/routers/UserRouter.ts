@@ -13,11 +13,11 @@ class UserRouter {
     this.deleteRoutes();
   }
 
-  getRoutes() {
-    this.router.get("/login", UserController.login);
-  }
+  getRoutes() {}
 
-  postRoutes() {}
+  postRoutes() {
+    this.router.post("/login", UserController.login);
+  }
 
   patchRoutes() {}
 

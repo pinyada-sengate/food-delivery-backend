@@ -8,7 +8,9 @@ export class UserController {
     //   status_code: 404,
     // });
 
-    const error = new Error("Email and password does not match");
-    next(error);
+    // const error = new Error("Email and password does not match");
+    // next(error);
+
+    res.send(req.body);
   }
 }
