@@ -10,7 +10,7 @@ export class UserController {
       next(new Error(errors.array()[0].msg));
     }
 
-    const { name, email, password, type, status } = req.body;
+    const { name, email, password, type, status, phone } = req.body;
 
     const user = new User({
       email,
@@ -18,6 +18,7 @@ export class UserController {
       name,
       type,
       status,
+      phone,
     });
 
     user
