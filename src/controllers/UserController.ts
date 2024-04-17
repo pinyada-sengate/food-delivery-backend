@@ -3,18 +3,21 @@ import { validationResult } from "express-validator";
 import User from "../models/User";
 
 export class UserController {
-  static login(req, res, next) {
+  static signup(req, res, next) {
     const errors = validationResult(req);
+
     if (!errors.isEmpty()) {
-      return res.status(400).json({
-        errors: errors.array().map((e) => e.msg),
-      });
+      next(new Error(errors.array()[0].msg));
     }
-    const { email, password } = req.body;
+
+    const { name, email, password, type, status } = req.body;
 
     const user = new User({
       email,
       password,
+      name,
+      type,
+      status,
     });
 
     user
