@@ -3,15 +3,15 @@ import { body } from "express-validator";
 export class UserValidators {
   static signup() {
     return [
+      body("name", "Name is requied").isString(),
+      body("phone", "Phone number is requied").isString(),
       body("email", "Email is required").isEmail(),
       body("password", "Password is required")
-        .isLength({ min: 5 })
-        .custom((value, { req }) => {
-          if (req.body.email) return true;
-          else {
-            throw new Error("Email is not available for validation");
-          }
-        }),
+        .isAlphanumeric()
+        .isLength({ min: 8, max: 20 })
+        .withMessage("Password must be between 8 - 20 characters"),
+      body("type", "User role is requied").isString(),
+      body("status", "User status is requied").isString(),
     ];
   }
 }
