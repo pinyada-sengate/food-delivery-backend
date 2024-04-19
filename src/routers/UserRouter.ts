@@ -15,7 +15,13 @@ class UserRouter {
     this.deleteRoutes();
   }
 
-  getRoutes() {}
+  getRoutes() {
+    this.router.get(
+      "/send/verification/email",
+      UserValidators.verifyUserForResendEmail(),
+      UserController.resendVerificationEmail
+    );
+  }
 
   postRoutes() {
     this.router.post(

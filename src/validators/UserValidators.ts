@@ -1,5 +1,4 @@
-import { body } from "express-validator";
-
+import { body, query } from "express-validator";
 import User from "../models/User";
 
 export class UserValidators {
@@ -41,5 +40,9 @@ export class UserValidators {
         "Email verification token is required"
       ).isNumeric(),
     ];
+  }
+
+  static verifyUserForResendEmail() {
+    return [query("email", "Email is required").isEmail()];
   }
 }

@@ -21,7 +21,7 @@ export class UserController {
       user = await user.save();
       await NodeMailer.sendMail({
         to: [user.email],
-        subject: "test",
+        subject: "Email verification",
         html: `<h1>OTP: ${user.verification_token}</h1>`,
       });
       res.send(user);
@@ -50,6 +50,37 @@ export class UserController {
         res.send(user);
       } else {
         throw new Error("Email verification is expired.");
+      }
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  static async resendVerificationEmail(req, res, next) {
+    const { email } = req.body;
+    const verificationToken = Utils.generateVerificationToken();
+
+    try {
+      const user = await User.findOneAndUpdate(
+        {
+          email,
+        },
+        {
+          verification_token: verificationToken,
+          verification_token_time: Date.now() + Utils.MAX_TOKEN_TIME,
+        },
+        { new: true }
+      );
+
+      if (user) {
+        await NodeMailer.sendMail({
+          to: [user.email],
+          subject: "Resend email verification",
+          html: `<h1>OTP: ${user.verification_token}</h1>`,
+        });
+        res.json({ success: true });
+      } else {
+        throw new Error("User does not exist.");
       }
     } catch (e) {
       next(e);
