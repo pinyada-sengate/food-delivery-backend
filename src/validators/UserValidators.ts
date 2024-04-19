@@ -1,11 +1,29 @@
 import { body } from "express-validator";
 
+import User from "../models/User";
+
 export class UserValidators {
   static signup() {
     return [
       body("name", "Name is requied").isString(),
       body("phone", "Phone number is requied").isString(),
-      body("email", "Email is required").isEmail(),
+      body("email", "Email is required")
+        .isEmail()
+        .custom(async (email, { req }) => {
+          try {
+            const user = await User.findOne({
+              email,
+            });
+
+            if (user) {
+              throw new Error("User already exists");
+            } else {
+              return true;
+            }
+          } catch (e) {
+            throw new Error(e);
+          }
+        }),
       body("password", "Password is required")
         .isAlphanumeric()
         .isLength({ min: 8, max: 20 })
