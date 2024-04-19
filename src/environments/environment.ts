@@ -3,6 +3,7 @@ import { ProdEnvironment } from "./environment.prod";
 
 export interface Environment {
   mongoURI: string;
+  sendGridKey: string;
 }
 
 export function getEnviromentVariables() {

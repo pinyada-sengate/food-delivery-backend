@@ -1,4 +1,5 @@
 import User from "../models/User";
+import { NodeMailer } from "../utils/NodeMailer";
 import { Utils } from "../utils/Utils";
 
 export class UserController {
@@ -18,7 +19,11 @@ export class UserController {
 
     try {
       user = await user.save();
-      //TODO: send email to user for verification
+      await NodeMailer.sendMail({
+        to: [user.email],
+        subject: "test",
+        html: `<h1>OTP: ${user.verification_token}</h1>`,
+      });
       res.send(user);
     } catch (e) {
       next(e);
