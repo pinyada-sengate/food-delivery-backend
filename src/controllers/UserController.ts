@@ -4,12 +4,11 @@ import { Utils } from "../utils/Utils";
 export class UserController {
   static async signup(req, res, next) {
     const { email, password, phone, name, type, status } = req.body;
-    const verifivationTokenTime = 5 * 60 * 1000; // 5 minute
 
     let user = new User({
       email,
       verification_token: Utils.generateVerificationToken(),
-      verification_token_time: Date.now() + verifivationTokenTime,
+      verification_token_time: Date.now() + Utils.MAX_TOKEN_TIME,
       password,
       phone,
       name,
