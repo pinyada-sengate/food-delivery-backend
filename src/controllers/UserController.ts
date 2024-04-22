@@ -1,9 +1,6 @@
-import * as Jwt from "jsonwebtoken";
-
 import User from "../models/User";
 import { NodeMailer } from "../utils/NodeMailer";
 import { Utils } from "../utils/Utils";
-import { getEnviromentVariables } from "../environments/environment";
 
 export class UserController {
   static async signup(req, res, next) {
@@ -28,9 +25,7 @@ export class UserController {
         user_id: user._id,
         email: user.email,
       };
-      const token = Jwt.sign(payload, getEnviromentVariables().jwtSecretKey, {
-        expiresIn: "30d",
-      });
+      const token = Utils.jwtSign(payload);
 
       res.json({
         token,
@@ -99,6 +94,31 @@ export class UserController {
       } else {
         throw new Error("User does not exist.");
       }
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  static async login(req, res, next) {
+    const { password } = req.body;
+    const user = req.user;
+    const data = {
+      password,
+      encryptPassword: user.password,
+    };
+
+    try {
+      await Utils.comparePassword(data);
+      const payload = {
+        user_id: user._id,
+        email: user.email,
+      };
+      const token = Utils.jwtSign(payload);
+
+      res.json({
+        token,
+        user,
+      });
     } catch (e) {
       next(e);
     }

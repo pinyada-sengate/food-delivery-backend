@@ -45,4 +45,28 @@ export class UserValidators {
   static verifyUserForResendEmail() {
     return [query("email", "Email is required").isEmail()];
   }
+
+  static login() {
+    return [
+      body("email", "Email is required")
+        .isEmail()
+        .custom(async (email, { req }) => {
+          try {
+            const user = await User.findOne({
+              email,
+            });
+
+            if (user) {
+              req.user = user;
+              return true;
+            } else {
+              throw new Error("User does not exists");
+            }
+          } catch (e) {
+            throw new Error(e);
+          }
+        }),
+      body("password", "Password is required").isAlphanumeric(),
+    ];
+  }
 }
