@@ -1,28 +1,16 @@
-import * as Bcrypt from "bcrypt";
+import * as Jwt from "jsonwebtoken";
+
 import User from "../models/User";
 import { NodeMailer } from "../utils/NodeMailer";
 import { Utils } from "../utils/Utils";
+import { getEnviromentVariables } from "../environments/environment";
 
 export class UserController {
-  private static encryptPassword(req, res, next) {
-    const saltRounds = 10;
-
-    return new Promise((resolve, reject) => {
-      Bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(hash);
-        }
-      });
-    });
-  }
-
   static async signup(req, res, next) {
-    const { email, phone, name, type, status } = req.body;
+    const { email, phone, name, type, status, password } = req.body;
 
     try {
-      const hash = await UserController.encryptPassword(req, res, next);
+      const hash = await Utils.encryptPassword(password);
 
       let user = new User({
         email,
@@ -36,12 +24,24 @@ export class UserController {
       });
 
       user = await user.save();
+      const payload = {
+        user_id: user._id,
+        email: user.email,
+      };
+      const token = Jwt.sign(payload, getEnviromentVariables().jwtSecretKey, {
+        expiresIn: "30d",
+      });
+
+      res.json({
+        token,
+        user,
+      });
+
       await NodeMailer.sendMail({
         to: [user.email],
         subject: "Email verification",
         html: `<h1>OTP: ${user.verification_token}</h1>`,
       });
-      res.send(user);
     } catch (e) {
       next(e);
     }
