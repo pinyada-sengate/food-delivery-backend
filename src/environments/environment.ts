@@ -4,6 +4,7 @@ import { ProdEnvironment } from "./environment.prod";
 export interface Environment {
   mongoURI: string;
   sendGridKey: string;
+  jwtSecretKey: string;
 }
 
 export function getEnviromentVariables() {
