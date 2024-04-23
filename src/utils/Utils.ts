@@ -1,5 +1,4 @@
 import * as Bcrypt from "bcrypt";
-import * as Jwt from "jsonwebtoken";
 
 import { getEnviromentVariables } from "../environments/environment";
 
@@ -45,12 +44,6 @@ export class Utils {
           resolve(same);
         }
       });
-    });
-  }
-
-  static jwtSign(payload, expiresIn: string = "30d") {
-    return Jwt.sign(payload, getEnviromentVariables().jwtSecretKey, {
-      expiresIn,
     });
   }
 }

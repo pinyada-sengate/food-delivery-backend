@@ -1,4 +1,5 @@
 import User from "../models/User";
+import { Jwt } from "../utils/Jwt";
 import { NodeMailer } from "../utils/NodeMailer";
 import { Utils } from "../utils/Utils";
 
@@ -25,7 +26,7 @@ export class UserController {
         user_id: user._id,
         email: user.email,
       };
-      const token = Utils.jwtSign(payload);
+      const token = Jwt.jwtSign(payload);
 
       res.json({
         token,
@@ -113,7 +114,7 @@ export class UserController {
         user_id: user._id,
         email: user.email,
       };
-      const token = Utils.jwtSign(payload);
+      const token = Jwt.jwtSign(payload);
 
       res.json({
         token,
