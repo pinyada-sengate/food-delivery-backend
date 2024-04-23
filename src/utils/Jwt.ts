@@ -8,4 +8,18 @@ export class Jwt {
       expiresIn,
     });
   }
+
+  static jwtVerify(token: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      jwt.verify(
+        token,
+        getEnviromentVariables().jwtSecretKey,
+        (err, decoded) => {
+          if (err) reject(err);
+          else if (!decoded) reject(new Error("User is not authorized"));
+          else resolve(decoded);
+        }
+      );
+    });
+  }
 }
