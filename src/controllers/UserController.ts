@@ -70,7 +70,7 @@ export class UserController {
   }
 
   static async resendVerificationEmail(req, res, next) {
-    const { email } = req.body;
+    const { email } = req.user;
     const verificationToken = Utils.generateVerificationToken();
 
     try {
