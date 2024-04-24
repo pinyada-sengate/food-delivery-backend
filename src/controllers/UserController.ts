@@ -63,7 +63,7 @@ export class UserController {
       if (user) {
         res.send(user);
       } else {
-        throw new Error("Email verification is expired.");
+        throw new Error("Invalid OTP or Email verification is expired.");
       }
     } catch (e) {
       next(e);
