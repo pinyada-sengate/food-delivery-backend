@@ -65,4 +65,26 @@ export class UserValidators {
       body("password", "Password is required").isAlphanumeric(),
     ];
   }
+
+  static checkResetPasswordEmail() {
+    return [
+      query("email", "Email is required")
+        .isEmail()
+        .custom(async (email, { req }) => {
+          try {
+            const user = await User.findOne({
+              email,
+            });
+
+            if (user) {
+              return true;
+            } else {
+              throw new Error("User does not exists");
+            }
+          } catch (e) {
+            throw new Error(e);
+          }
+        }),
+    ];
+  }
 }

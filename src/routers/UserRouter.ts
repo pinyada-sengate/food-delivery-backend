@@ -28,6 +28,13 @@ class UserRouter {
       GlobalMiddleware.checkError,
       UserController.login
     );
+
+    this.router.get(
+      "/reset/password",
+      UserValidators.checkResetPasswordEmail(),
+      GlobalMiddleware.checkError,
+      UserController.sendResetPasswordOtp
+    );
   }
 
   postRoutes() {

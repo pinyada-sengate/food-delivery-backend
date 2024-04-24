@@ -2,6 +2,7 @@ import User from "../models/User";
 import { Jwt } from "../utils/Jwt";
 import { NodeMailer } from "../utils/NodeMailer";
 import { Utils } from "../utils/Utils";
+import { query } from "express-validator";
 
 export class UserController {
   static async signup(req, res, next) {
@@ -123,6 +124,38 @@ export class UserController {
         token,
         user,
       });
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  static async sendResetPasswordOtp(req, res, next) {
+    const { email } = req.query;
+    const resetPasswordToken = Utils.generateVerificationToken();
+
+    try {
+      const user = await User.findOneAndUpdate(
+        {
+          email,
+        },
+        {
+          reset_password_token: resetPasswordToken,
+          reset_password_token_time: Date.now() + Utils.MAX_TOKEN_TIME,
+          updated_at: new Date(),
+        },
+        { new: true }
+      );
+
+      if (user) {
+        await NodeMailer.sendMail({
+          to: [user.email],
+          subject: "Reset password verification",
+          html: `<h1>OTP: ${user.reset_password_token}</h1>`,
+        });
+        res.json({ success: true });
+      } else {
+        throw new Error("User does not exist.");
+      }
     } catch (e) {
       next(e);
     }
