@@ -53,6 +53,7 @@ export class UserController {
           email,
           verification_token,
           verification_token_time: { $gt: Date.now() },
+          updated_at: new Date(),
         },
         {
           email_verification: true,
@@ -82,6 +83,7 @@ export class UserController {
         {
           verification_token: verificationToken,
           verification_token_time: Date.now() + Utils.MAX_TOKEN_TIME,
+          updated_at: new Date(),
         },
         { new: true }
       );
