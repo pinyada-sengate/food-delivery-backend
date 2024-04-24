@@ -42,8 +42,8 @@ class UserRouter {
   patchRoutes() {
     this.router.patch(
       "/verify",
-      UserValidators.verifyEmail(),
-      GlobalMiddleware.checkError,
+      UserValidators.verifyUser(),
+      GlobalMiddleware.auth,
       UserController.verify
     );
   }

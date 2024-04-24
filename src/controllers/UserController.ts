@@ -44,7 +44,8 @@ export class UserController {
   }
 
   static async verify(req, res, next) {
-    const { email, verification_token } = req.body;
+    const { verification_token } = req.body;
+    const { email } = req.user;
 
     try {
       const user = await User.findOneAndUpdate(
