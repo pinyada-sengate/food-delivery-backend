@@ -91,7 +91,7 @@ export class UserValidators {
   static verifyResetPasswordToken() {
     return [
       query("email", "Email is required").isEmail(),
-      body("reset_password_token", "Reset password token is required")
+      query("reset_password_token", "Reset password token is required")
         .isNumeric()
         .custom(async (resetPasswordToken, { req }) => {
           try {
