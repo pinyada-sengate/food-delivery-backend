@@ -30,7 +30,7 @@ class UserRouter {
     );
 
     this.router.get(
-      "/reset/password",
+      "/send/reset/password/token",
       UserValidators.checkResetPasswordEmail(),
       GlobalMiddleware.checkError,
       UserController.sendResetPasswordOtp
