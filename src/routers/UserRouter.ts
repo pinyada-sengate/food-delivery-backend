@@ -60,6 +60,13 @@ class UserRouter {
       GlobalMiddleware.auth,
       UserController.verify
     );
+
+    this.router.patch(
+      "/reset/password",
+      UserValidators.resetPassword(),
+      GlobalMiddleware.checkError,
+      UserController.resetPassword
+    );
   }
 
   putRoutes() {}

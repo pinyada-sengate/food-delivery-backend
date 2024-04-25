@@ -112,4 +112,40 @@ export class UserValidators {
         }),
     ];
   }
+
+  static resetPassword() {
+    return [
+      body("email", "Email is required")
+        .isEmail()
+        .custom(async (email, { req }) => {
+          try {
+            const user = await User.findOne({
+              email,
+            });
+            if (user) {
+              req.user = user;
+              return true;
+            } else {
+              throw new Error("User does not exists");
+            }
+          } catch (e) {
+            throw new Error(e);
+          }
+        }),
+      body("reset_password_token", "Reset password token is required")
+        .isNumeric()
+        .custom(async (resetPasswordToken, { req }) => {
+          if (req.user.reset_password_token === resetPasswordToken) {
+            return true;
+          } else {
+            req.errorStatus = 422;
+            throw new Error("Invalid reset password token");
+          }
+        }),
+      body("new_password", "New password is required")
+        .isAlphanumeric()
+        .isLength({ min: 8, max: 20 })
+        .withMessage("Password must be between 8 - 20 characters"),
+    ];
+  }
 }

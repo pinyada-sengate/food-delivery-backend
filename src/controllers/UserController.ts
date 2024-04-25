@@ -168,4 +168,31 @@ export class UserController {
       next(e);
     }
   }
+
+  static async resetPassword(req, res, next) {
+    const user = req.user;
+    const newPassword = req.body.new_password;
+
+    try {
+      const encryptPassword = await Utils.encryptPassword(newPassword);
+      const updatedUser = await User.findOneAndUpdate(
+        {
+          _id: user._id,
+        },
+        {
+          password: encryptPassword,
+          updated_at: new Date(),
+        },
+        { new: true }
+      );
+
+      if (updatedUser) {
+        res.send(updatedUser);
+      } else {
+        throw new Error("User does not exist.");
+      }
+    } catch (e) {
+      next(e);
+    }
+  }
 }
