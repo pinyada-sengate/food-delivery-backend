@@ -35,6 +35,13 @@ class UserRouter {
       GlobalMiddleware.checkError,
       UserController.sendResetPasswordOtp
     );
+
+    this.router.get(
+      "/verify/resetPasswordToken",
+      UserValidators.verifyResetPasswordToken(),
+      GlobalMiddleware.checkError,
+      UserController.verifyResetPasswordToken
+    );
   }
 
   postRoutes() {

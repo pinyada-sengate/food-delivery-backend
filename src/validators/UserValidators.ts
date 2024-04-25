@@ -87,4 +87,29 @@ export class UserValidators {
         }),
     ];
   }
+
+  static verifyResetPasswordToken() {
+    return [
+      query("email", "Email is required").isEmail(),
+      body("reset_password_token", "Reset password token is required")
+        .isNumeric()
+        .custom(async (resetPasswordToken, { req }) => {
+          try {
+            const user = await User.findOne({
+              email: req.query.email,
+              reset_password_token: resetPasswordToken,
+              reset_password_token_time: { $gt: Date.now() },
+            });
+
+            if (user) {
+              return true;
+            } else {
+              throw new Error("Reset password token does not exists");
+            }
+          } catch (e) {
+            throw new Error(e);
+          }
+        }),
+    ];
+  }
 }

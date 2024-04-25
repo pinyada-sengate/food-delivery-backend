@@ -160,4 +160,12 @@ export class UserController {
       next(e);
     }
   }
+
+  static async verifyResetPasswordToken(req, res, next) {
+    try {
+      res.json({ success: true });
+    } catch (e) {
+      next(e);
+    }
+  }
 }
