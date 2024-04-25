@@ -35,7 +35,7 @@ export class Utils {
     const saltRounds = 10;
 
     return new Promise((resolve, reject) => {
-      Bcrypt.hash(data.password, data.encryptPassword, (err, same) => {
+      Bcrypt.compare(data.password, data.encryptPassword, (err, same) => {
         if (err) {
           reject(err);
         } else if (!same) {
