@@ -105,7 +105,7 @@ export class UserController {
   }
 
   static async login(req, res, next) {
-    const { password } = req.body;
+    const { password } = req.query;
     const user = req.user;
     const data = {
       password,

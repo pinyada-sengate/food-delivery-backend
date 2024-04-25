@@ -44,7 +44,7 @@ export class UserValidators {
 
   static login() {
     return [
-      body("email", "Email is required")
+      query("email", "Email is required")
         .isEmail()
         .custom(async (email, { req }) => {
           try {
@@ -62,7 +62,7 @@ export class UserValidators {
             throw new Error(e);
           }
         }),
-      body("password", "Password is required").isAlphanumeric(),
+      query("password", "Password is required").isAlphanumeric(),
     ];
   }
 
