@@ -55,10 +55,10 @@ class UserRouter {
 
   patchRoutes() {
     this.router.patch(
-      "/verify",
-      UserValidators.verifyUser(),
+      "/verify/emailToken",
+      UserValidators.verifyUserEmailToken(),
       GlobalMiddleware.auth,
-      UserController.verify
+      UserController.verifyUserEmailToken
     );
 
     this.router.patch(

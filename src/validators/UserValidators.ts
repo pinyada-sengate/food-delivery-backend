@@ -32,7 +32,7 @@ export class UserValidators {
     ];
   }
 
-  static verifyUser() {
+  static verifyUserEmailToken() {
     return [
       body("verification_token", "Verification token is required").isNumeric(),
     ];

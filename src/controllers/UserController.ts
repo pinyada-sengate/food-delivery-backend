@@ -44,7 +44,7 @@ export class UserController {
     }
   }
 
-  static async verify(req, res, next) {
+  static async verifyUserEmailToken(req, res, next) {
     const { verification_token } = req.body;
     const { email } = req.user;
 
