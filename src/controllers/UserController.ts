@@ -211,4 +211,67 @@ export class UserController {
       next(e);
     }
   }
+
+  static async updateUserPhoneNumber(req, res, next) {
+    const { phone } = req.body;
+    const user = req.user;
+    try {
+      const userData = await User.findByIdAndUpdate(
+        user.user_id,
+        { phone, updated_at: new Date() },
+        { new: true }
+      );
+      res.send(userData);
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  static async updateUserProfile(req, res, next) {
+    const { phone, email, password } = req.body;
+    const user = req.user;
+    try {
+      const userData = await User.findById(user.user_id);
+      if (!userData) {
+        throw new Error("User does not exist");
+      }
+
+      await Utils.comparePassword({
+        password,
+        encryptPassword: userData.password,
+      });
+
+      const updatedUser = await User.findByIdAndUpdate(
+        user.user_id,
+        {
+          phone,
+          email,
+          email_verified: false,
+          verification_token: Utils.generateVerificationToken(),
+          verification_token_time: Date.now() + Utils.MAX_TOKEN_TIME,
+          updated_at: new Date(),
+        },
+        { new: true }
+      );
+
+      const payload = {
+        user_id: updatedUser._id,
+        email: updatedUser.email,
+      };
+      const token = Jwt.jwtSign(payload);
+
+      res.json({
+        token,
+        user: updatedUser,
+      });
+
+      await NodeMailer.sendMail({
+        to: [updatedUser.email],
+        subject: "Update an email verification",
+        html: `<h1>OTP: ${updatedUser.verification_token}</h1>`,
+      });
+    } catch (e) {
+      next(e);
+    }
+  }
 }

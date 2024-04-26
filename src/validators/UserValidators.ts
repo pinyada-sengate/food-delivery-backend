@@ -148,4 +148,31 @@ export class UserValidators {
         .withMessage("Password must be between 8 - 20 characters"),
     ];
   }
+
+  static verifyPhoneNumber() {
+    return [body("phone", "Phone number is required").isString()];
+  }
+
+  static verifyUserProfile() {
+    return [
+      body("phone", "Phone number is required").isString(),
+      body("email", "Email is required")
+        .isEmail()
+        .custom(async (email, { req }) => {
+          try {
+            const user = await User.findOne({
+              email,
+            });
+            if (user) {
+              throw new Error("A User with entered email already exist.");
+            } else {
+              return true;
+            }
+          } catch (e) {
+            throw new Error(e);
+          }
+        }),
+      body("password", "Password is required").isAlphanumeric(),
+    ];
+  }
 }

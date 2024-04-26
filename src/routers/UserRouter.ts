@@ -70,6 +70,22 @@ class UserRouter {
       GlobalMiddleware.checkError,
       UserController.resetPassword
     );
+
+    this.router.patch(
+      "/update/phoneNumber",
+      GlobalMiddleware.auth,
+      UserValidators.verifyPhoneNumber(),
+      GlobalMiddleware.checkError,
+      UserController.updateUserPhoneNumber
+    );
+
+    this.router.patch(
+      "/update/userProfile",
+      GlobalMiddleware.auth,
+      UserValidators.verifyUserProfile(),
+      GlobalMiddleware.checkError,
+      UserController.updateUserProfile
+    );
   }
 
   putRoutes() {}
