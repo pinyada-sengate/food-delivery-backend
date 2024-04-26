@@ -11,8 +11,8 @@ const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
   type: { type: String, required: true },
   status: { type: String, required: true },
-  reset_password_token: { type: String, required: true },
-  reset_password_token_time: { type: Date, required: true },
+  reset_password_token: { type: String, required: false },
+  reset_password_token_time: { type: Date, required: false },
   created_at: { type: Date, required: true, default: new Date() },
   updated_at: { type: Date, required: true, default: new Date() },
 });
