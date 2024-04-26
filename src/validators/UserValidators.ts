@@ -160,6 +160,10 @@ export class UserValidators {
         .isEmail()
         .custom(async (email, { req }) => {
           try {
+            if (email === req.user.email) {
+              throw new Error("Please provide a new email address.");
+            }
+
             const user = await User.findOne({
               email,
             });
