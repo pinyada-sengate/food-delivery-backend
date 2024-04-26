@@ -42,6 +42,8 @@ class UserRouter {
       GlobalMiddleware.checkError,
       UserController.verifyResetPasswordToken
     );
+
+    this.router.get("/profile", GlobalMiddleware.auth, UserController.profile);
   }
 
   postRoutes() {

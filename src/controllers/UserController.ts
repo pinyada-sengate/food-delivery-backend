@@ -195,4 +195,20 @@ export class UserController {
       next(e);
     }
   }
+
+  static async profile(req, res, next) {
+    const user = req.user;
+
+    try {
+      const profile = await User.findById(user.user_id);
+
+      if (profile) {
+        res.send(profile);
+      } else {
+        throw new Error("Profile does not exist.");
+      }
+    } catch (e) {
+      next(e);
+    }
+  }
 }
