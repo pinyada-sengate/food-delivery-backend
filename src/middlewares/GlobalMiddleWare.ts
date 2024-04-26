@@ -15,10 +15,16 @@ export class GlobalMiddleware {
     const headerAuth = req.headers.authorization;
     const token = headerAuth ? headerAuth.slice(7, headerAuth.lenhth) : null;
     try {
+      if (!token) {
+        req.errorStatus = 401;
+        next(new Error("User does not exist"));
+      }
+
       const decoded = await Jwt.jwtVerify(token);
       req.user = decoded;
       next();
     } catch (e) {
+      req.errorStatus = 401;
       next(e);
     }
   }
