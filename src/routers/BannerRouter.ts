@@ -14,14 +14,7 @@ class BannerRouter {
 
   getRoutes() {}
 
-  postRoutes() {
-    this.router.post(
-      "/signup",
-      UserValidators.signup(),
-      GlobalMiddleware.checkError,
-      UserController.signup
-    );
-  }
+  postRoutes() {}
 
   patchRoutes() {}
 
