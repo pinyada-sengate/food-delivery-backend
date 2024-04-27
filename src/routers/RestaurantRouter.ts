@@ -1,4 +1,8 @@
 import { Router } from "express";
+import { GlobalMiddleware } from "../middlewares/GlobalMiddleWare";
+import { RestaurantValidators } from "../validators/RestaurantValidators";
+import { RestaurantController } from "../controllers/RestaurantController";
+import { Utils } from "../utils/Utils";
 
 class BannerRouter {
   public router: Router;
@@ -14,7 +18,16 @@ class BannerRouter {
 
   getRoutes() {}
 
-  postRoutes() {}
+  postRoutes() {
+    this.router.post(
+      "/add",
+      GlobalMiddleware.auth,
+      new Utils().multer.single("cover"),
+      RestaurantValidators.addRestaurant(),
+      GlobalMiddleware.checkError,
+      RestaurantController.addRestaurant
+    );
+  }
 
   patchRoutes() {}
 

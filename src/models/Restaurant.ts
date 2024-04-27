@@ -6,8 +6,9 @@ const restaurantSchema = new mongoose.Schema({
   city_id: { type: mongoose.Types.ObjectId, required: true },
   name: { type: String, required: true },
   description: { type: String },
-  open_time: { type: Date, required: true },
-  close_time: { type: Date, required: true },
+  cover: { type: String },
+  open_time: { type: String, required: true },
+  close_time: { type: String, required: true },
   address: { type: String, required: true },
   cuisines: { type: Array, required: true },
   status: { type: Boolean, required: true, default: true }, // true is active, false is inactive
