@@ -13,4 +13,13 @@ export class BannerController {
       next(e);
     }
   }
+
+  static async getBanner(req, res, next) {
+    try {
+      const banners = await Banner.find();
+      res.send(banners);
+    } catch (e) {
+      next(e);
+    }
+  }
 }

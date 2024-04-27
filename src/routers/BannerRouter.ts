@@ -17,7 +17,13 @@ class BannerRouter {
     this.deleteRoutes();
   }
 
-  getRoutes() {}
+  getRoutes() {
+    this.router.get(
+      "/banners",
+      GlobalMiddleware.auth,
+      BannerController.getBanner
+    );
+  }
 
   postRoutes() {
     this.router.post(
