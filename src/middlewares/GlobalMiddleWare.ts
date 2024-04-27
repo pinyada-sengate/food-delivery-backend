@@ -28,4 +28,14 @@ export class GlobalMiddleware {
       next(e);
     }
   }
+
+  static adminRole(req, res, next) {
+    const user = req.user;
+
+    if (user.type === "admin") {
+      req.errorStatus = 401;
+      next(new Error("Unauthorize user"));
+    }
+    next();
+  }
 }

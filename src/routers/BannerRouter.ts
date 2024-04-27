@@ -1,5 +1,10 @@
 import { Router } from "express";
 
+import { GlobalMiddleware } from "../middlewares/GlobalMiddleWare";
+import { BannerValidators } from "../validators/BannerValidators";
+import { BannerController } from "../controllers/BannerController";
+import { Utils } from "../utils/Utils";
+
 class BannerRouter {
   public router: Router;
 
@@ -14,7 +19,17 @@ class BannerRouter {
 
   getRoutes() {}
 
-  postRoutes() {}
+  postRoutes() {
+    this.router.post(
+      "/add/banner",
+      GlobalMiddleware.auth,
+      GlobalMiddleware.adminRole,
+      new Utils().multer.single("banner"),
+      BannerValidators.addBanner(),
+      GlobalMiddleware.checkError,
+      BannerController.addBanner
+    );
+  }
 
   patchRoutes() {}
 
