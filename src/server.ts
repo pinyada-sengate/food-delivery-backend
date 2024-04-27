@@ -6,6 +6,7 @@ import * as cors from "cors";
 import { getEnviromentVariables } from "./environments/environment";
 import UserRouter from "./routers/UserRouter";
 import BannerRouter from "./routers/BannerRouter";
+import CityRouter from "./routers/CityRouter";
 
 export class Server {
   public app: express.Application = express();
@@ -45,6 +46,7 @@ export class Server {
     this.app.use("/src/uploads", express.static("src/uploads"));
     this.app.use("/api/user", UserRouter);
     this.app.use("/api/banner", BannerRouter);
+    this.app.use("/api/city", CityRouter);
   }
 
   error404Handler() {

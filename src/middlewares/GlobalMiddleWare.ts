@@ -17,7 +17,7 @@ export class GlobalMiddleware {
     try {
       if (!token) {
         req.errorStatus = 401;
-        next(new Error("User does not exist"));
+        next(new Error("Token does not exist"));
       }
 
       const decoded = await Jwt.jwtVerify(token);
