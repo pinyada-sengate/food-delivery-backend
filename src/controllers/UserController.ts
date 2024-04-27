@@ -2,7 +2,6 @@ import User from "../models/User";
 import { Jwt } from "../utils/Jwt";
 import { NodeMailer } from "../utils/NodeMailer";
 import { Utils } from "../utils/Utils";
-import { query } from "express-validator";
 
 export class UserController {
   static async signup(req, res, next) {
