@@ -16,7 +16,13 @@ class BannerRouter {
     this.deleteRoutes();
   }
 
-  getRoutes() {}
+  getRoutes() {
+    this.router.get(
+      "/restaurants",
+      GlobalMiddleware.auth,
+      RestaurantController.getRestaurants
+    );
+  }
 
   postRoutes() {
     this.router.post(

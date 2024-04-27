@@ -40,5 +40,12 @@ export class RestaurantController {
     }
   }
 
-  static async getRestaurants(req, res, next) {}
+  static async getRestaurants(req, res, next) {
+    try {
+      const restaurants = await Restaurant.find();
+      res.send(restaurants);
+    } catch (e) {
+      next(e);
+    }
+  }
 }
