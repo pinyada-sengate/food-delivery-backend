@@ -17,5 +17,12 @@ export class CityController {
     }
   }
 
-  static async getCities(req, res, next) {}
+  static async getCities(req, res, next) {
+    try {
+      const cities = await City.find();
+      res.send(cities);
+    } catch (e) {
+      next(e);
+    }
+  }
 }
