@@ -3,7 +3,7 @@ import { model } from "mongoose";
 
 const bannerSchema = new mongoose.Schema({
   banner: { type: String, required: true },
-  status: { type: Number, required: true, default: 1 }, // 1 is active, 0 is inactive
+  status: { type: Boolean, required: true, default: true }, // true is active, false is inactive
   created_at: { type: Date, required: true, default: new Date() },
   updated_at: { type: Date, required: true, default: new Date() },
 });
