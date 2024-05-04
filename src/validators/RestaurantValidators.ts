@@ -10,6 +10,16 @@ export class RestaurantValidators {
       body("close_time", "Close time is required").isString(),
       body("address", "Restaurant address is required").isString(),
       body("cuisines", "Cuisines is required").isString(),
+      body("restaurantImages", "Restaurant image is required").custom(
+        (image, { req }) => {
+          if (req.file) {
+            //TODO: validate if file is image
+            return true;
+          } else {
+            throw new Error("Banner image is required");
+          }
+        }
+      ),
     ];
   }
 }

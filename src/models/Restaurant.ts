@@ -6,7 +6,7 @@ const restaurantSchema = new mongoose.Schema({
   city_id: { type: mongoose.Types.ObjectId, required: true },
   name: { type: String, required: true },
   description: { type: String },
-  cover: { type: String },
+  restaurant_image: { type: String },
   open_time: { type: String, required: true },
   close_time: { type: String, required: true },
   address: { type: String, required: true },
