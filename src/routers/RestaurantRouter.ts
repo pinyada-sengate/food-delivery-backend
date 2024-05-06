@@ -22,6 +22,14 @@ class BannerRouter {
       GlobalMiddleware.auth,
       RestaurantController.getRestaurants
     );
+
+    this.router.get(
+      "/nearbyRestaurants",
+      GlobalMiddleware.auth,
+      RestaurantValidators.nearbyRestaurants(),
+      GlobalMiddleware.checkError,
+      RestaurantController.getNearbyRestaurants
+    );
   }
 
   postRoutes() {

@@ -1,4 +1,4 @@
-import { body } from "express-validator";
+import { body, query } from "express-validator";
 
 export class RestaurantValidators {
   static addRestaurant() {
@@ -20,6 +20,14 @@ export class RestaurantValidators {
           }
         }
       ),
+    ];
+  }
+
+  static nearbyRestaurants() {
+    return [
+      query("lat", "Latitude is required").isNumeric(),
+      query("lng", "Longitude is required").isNumeric(),
+      query("radius", "Radius is required").isNumeric(),
     ];
   }
 }

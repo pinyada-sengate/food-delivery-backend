@@ -1,3 +1,4 @@
+import Banner from "../models/Banner";
 import Restaurant from "../models/Restaurant";
 
 export class RestaurantController {
@@ -43,6 +44,38 @@ export class RestaurantController {
   static async getRestaurants(req, res, next) {
     try {
       const restaurants = await Restaurant.find();
+      res.send(restaurants);
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  static async getNearbyRestaurants(req, res, next) {
+    const { lat, lng, radius } = req.query;
+    //const METERS_PER_KM = 1000;
+    //const EARTH_RADIUS_IN_MILE = 3963.2;
+    const EARTH_RADIUS_IN_KM = 6378.1;
+
+    try {
+      const restaurants = await Restaurant.find({
+        status: true,
+        location: {
+          // $nearSphere: {
+          //   $geometry: {
+          //     type: "Point",
+          //     coordinates: [parseFloat(lat), parseFloat(lng)],
+          //   },
+          //   $maxDistance: radias * METERS_PER_KM,
+          // },
+          $geoWithin: {
+            $centerSphere: [
+              [parseFloat(lat), parseFloat(lng)],
+              parseFloat(radius) / EARTH_RADIUS_IN_KM,
+            ],
+          },
+        },
+      });
+
       res.send(restaurants);
     } catch (e) {
       next(e);
