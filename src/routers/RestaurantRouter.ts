@@ -36,7 +36,7 @@ class BannerRouter {
     this.router.post(
       "/add",
       GlobalMiddleware.auth,
-      new Utils().multer.single("restaurantImage"),
+      new Utils().multer.single("restaurantImages"),
       RestaurantValidators.addRestaurant(),
       GlobalMiddleware.checkError,
       RestaurantController.addRestaurant

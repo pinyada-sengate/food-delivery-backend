@@ -9,6 +9,7 @@ export class RestaurantValidators {
       body("open_time", "Open time is required").isString(),
       body("close_time", "Close time is required").isString(),
       body("address", "Restaurant address is required").isString(),
+      //TODO: isObject is bug custom check cuisines format later
       body("cuisines", "Cuisines is required").isString(),
       body("restaurantImages", "Restaurant image is required").custom(
         (image, { req }) => {
@@ -16,10 +17,13 @@ export class RestaurantValidators {
             //TODO: validate if file is image
             return true;
           } else {
-            throw new Error("Banner image is required");
+            throw new Error("Restaurant image is required");
           }
         }
       ),
+      //TODO: isObject is bug custom check location format later
+      //{"type": "Point", "coordinates": [40.416775, -3.703790]}
+      body("location", "Location is required").isString(),
     ];
   }
 

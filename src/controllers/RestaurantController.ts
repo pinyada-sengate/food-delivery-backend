@@ -12,6 +12,7 @@ export class RestaurantController {
       address,
       cuisines,
       description,
+      location,
     } = req.body;
 
     try {
@@ -23,6 +24,7 @@ export class RestaurantController {
         close_time,
         address,
         cuisines,
+        location: JSON.parse(location),
       };
 
       if (description) {
