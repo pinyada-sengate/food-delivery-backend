@@ -1,4 +1,3 @@
-import Banner from "../models/Banner";
 import Restaurant from "../models/Restaurant";
 
 export class RestaurantController {
@@ -45,7 +44,9 @@ export class RestaurantController {
 
   static async getRestaurants(req, res, next) {
     try {
-      const restaurants = await Restaurant.find();
+      const restaurants = await Restaurant.find({
+        status: true,
+      });
       res.send(restaurants);
     } catch (e) {
       next(e);
