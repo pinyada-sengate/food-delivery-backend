@@ -30,6 +30,14 @@ class BannerRouter {
       GlobalMiddleware.checkError,
       RestaurantController.getNearbyRestaurants
     );
+
+    this.router.get(
+      "/searchNearbyRestaurants",
+      GlobalMiddleware.auth,
+      RestaurantValidators.searchNearbyRestaurants(),
+      GlobalMiddleware.checkError,
+      RestaurantController.searchNearbyRestaurants
+    );
   }
 
   postRoutes() {

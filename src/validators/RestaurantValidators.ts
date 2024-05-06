@@ -34,4 +34,13 @@ export class RestaurantValidators {
       query("radius", "Radius is required").isNumeric(),
     ];
   }
+
+  static searchNearbyRestaurants() {
+    return [
+      query("lat", "Latitude is required").isNumeric(),
+      query("lng", "Longitude is required").isNumeric(),
+      query("radius", "Radius is required").isNumeric(),
+      query("name", "Search query is required").isString(),
+    ];
+  }
 }

@@ -83,4 +83,28 @@ export class RestaurantController {
       next(e);
     }
   }
+
+  static async searchNearbyRestaurants(req, res, next) {
+    const { lat, lng, radius, name } = req.query;
+    const EARTH_RADIUS_IN_KM = 6378.1;
+
+    try {
+      const restaurants = await Restaurant.find({
+        status: true,
+        name: { $regex: name, $options: "i" },
+        location: {
+          $geoWithin: {
+            $centerSphere: [
+              [parseFloat(lat), parseFloat(lng)],
+              parseFloat(radius) / EARTH_RADIUS_IN_KM,
+            ],
+          },
+        },
+      });
+
+      res.send(restaurants);
+    } catch (e) {
+      next(e);
+    }
+  }
 }
