@@ -1,4 +1,6 @@
 import { Router } from "express";
+import { GlobalMiddleware } from "../middlewares/GlobalMiddleWare";
+import { CategoryController } from "../controllers/CategoryController";
 
 class CategoryRouter {
   public router: Router;
@@ -12,7 +14,13 @@ class CategoryRouter {
     this.deleteRoutes();
   }
 
-  getRoutes() {}
+  getRoutes() {
+    this.router.get(
+      "/getCategories:restaurantId",
+      GlobalMiddleware.auth,
+      CategoryController.getCategoriesByRestaurantId
+    );
+  }
 
   postRoutes() {}
 
