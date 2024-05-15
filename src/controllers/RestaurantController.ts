@@ -1,3 +1,4 @@
+import Category from "../models/Category";
 import Restaurant from "../models/Restaurant";
 
 export class RestaurantController {
@@ -12,6 +13,7 @@ export class RestaurantController {
       cuisines,
       description,
       location,
+      categories,
     } = req.body;
 
     try {
@@ -36,6 +38,14 @@ export class RestaurantController {
       }
 
       const restaurant = await new Restaurant(data).save();
+
+      //create categories
+      const categoriesData = JSON.parse(categories).map((category) => {
+        return { name: category, restaurant_id: restaurant._id };
+      });
+
+      await Category.insertMany(categoriesData);
+
       res.send(restaurant);
     } catch (e) {
       next(e);
