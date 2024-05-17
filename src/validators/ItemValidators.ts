@@ -40,14 +40,13 @@ export class ItemValidators {
         }),
       body("name", "Item name is required").isString(),
       body("price", "Price is required").isNumeric(),
-      body("status", "Status is required").isBoolean(),
       body("vegan", "Vegan is required").isBoolean(),
-      body("itemImages", "Banner is required").custom((item, { req }) => {
+      body("itemImages", "Item image is required").custom((item, { req }) => {
         if (req.file) {
           //TODO: validate if file is image
           return true;
         } else {
-          throw new Error("Banner image is required");
+          throw new Error("Item image is required");
         }
       }),
     ];
