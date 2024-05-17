@@ -1,4 +1,4 @@
-import { body } from "express-validator";
+import { body, param } from "express-validator";
 import Restaurant from "../models/Restaurant";
 import Category from "../models/Category";
 
@@ -49,6 +49,27 @@ export class ItemValidators {
           throw new Error("Item image is required");
         }
       }),
+    ];
+  }
+
+  static getItemsByRestaurantId() {
+    return [
+      param("restaurantId", "Restaurant id is required")
+        .isString()
+        .custom(async (restaurantId, { req }) => {
+          try {
+            const restaurant = await Restaurant.findById(restaurantId);
+
+            if (restaurant) {
+              req.restaurant = restaurant;
+              return true;
+            } else {
+              throw new Error("Restaurant does not exist");
+            }
+          } catch (e) {
+            throw new Error(e);
+          }
+        }),
     ];
   }
 }

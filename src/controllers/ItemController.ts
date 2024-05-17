@@ -45,4 +45,20 @@ export class ItemController {
       next(e);
     }
   }
+
+  // get all menu in restaurant
+  static async getItemsByRestaurantId(req, res, next) {
+    const restaurant = req.restaurant;
+    try {
+      const items = await Item.find({
+        restaurant_id: restaurant._id,
+      });
+      res.json({
+        restaurant,
+        items,
+      });
+    } catch (e) {
+      next(e);
+    }
+  }
 }

@@ -1,6 +1,7 @@
 import * as mongoose from "mongoose";
 import { model } from "mongoose";
 
+// dish in a menu
 const itemSchema = new mongoose.Schema({
   restaurant_id: { type: mongoose.Types.ObjectId, required: true },
   category_id: { type: mongoose.Types.ObjectId, required: true },

@@ -18,6 +18,13 @@ class ItemRouter {
 
   getRoutes() {
     this.router.get("/items", GlobalMiddleware.auth, ItemController.getItems);
+    this.router.get(
+      "/items/:restaurantId",
+      GlobalMiddleware.auth,
+      ItemValidators.getItemsByRestaurantId(),
+      GlobalMiddleware.checkError,
+      ItemController.getItemsByRestaurantId
+    );
   }
 
   postRoutes() {
