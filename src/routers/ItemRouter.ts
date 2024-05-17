@@ -2,6 +2,7 @@ import { Router } from "express";
 import { GlobalMiddleware } from "../middlewares/GlobalMiddleWare";
 import { ItemController } from "../controllers/ItemController";
 import { ItemValidators } from "../validators/ItemValidators";
+import { Utils } from "../utils/Utils";
 
 class ItemRouter {
   public router: Router;
@@ -16,18 +17,15 @@ class ItemRouter {
   }
 
   getRoutes() {
-    this.router.get(
-      "/items",
-      GlobalMiddleware.auth,
-      GlobalMiddleware.adminRole,
-      ItemController.getItems
-    );
+    this.router.get("/items", GlobalMiddleware.auth, ItemController.getItems);
   }
 
   postRoutes() {
     this.router.post(
       "/add",
       GlobalMiddleware.auth,
+      GlobalMiddleware.adminRole,
+      new Utils().multer.single("itemImages"),
       ItemValidators.addItem(),
       GlobalMiddleware.checkError,
       ItemController.addItem

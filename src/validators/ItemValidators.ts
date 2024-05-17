@@ -9,9 +9,7 @@ export class ItemValidators {
         .isString()
         .custom(async (restaurantId, { req }) => {
           try {
-            const restaurant = await Restaurant.findById({
-              restaurantId,
-            });
+            const restaurant = await Restaurant.findById(restaurantId);
 
             if (restaurant) {
               return true;
@@ -22,7 +20,6 @@ export class ItemValidators {
             throw new Error(e);
           }
         }),
-      ,
       body("category_id", "Category id is required")
         .isString()
         .custom(async (categoryId, { req }) => {
@@ -41,7 +38,6 @@ export class ItemValidators {
             throw new Error(e);
           }
         }),
-      ,
       body("name", "Item name is required").isString(),
       body("price", "Price is required").isNumeric(),
       body("status", "Status is required").isBoolean(),
