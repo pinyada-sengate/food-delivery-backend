@@ -24,6 +24,7 @@ export class RestaurantValidators {
       //TODO: isObject is bug custom check location format later
       //{"type": "Point", "coordinates": [40.416775, -3.703790]}
       body("location", "Location is required").isString(),
+      // TODO: categories validation. categories is [] format
     ];
   }
 
