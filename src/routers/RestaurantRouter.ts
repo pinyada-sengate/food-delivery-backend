@@ -4,7 +4,7 @@ import { RestaurantValidators } from "../validators/RestaurantValidators";
 import { RestaurantController } from "../controllers/RestaurantController";
 import { Utils } from "../utils/Utils";
 
-class BannerRouter {
+class RestaurantRouter {
   public router: Router;
 
   constructor() {
@@ -58,4 +58,4 @@ class BannerRouter {
   deleteRoutes() {}
 }
 
-export default new BannerRouter().router;
+export default new RestaurantRouter().router;

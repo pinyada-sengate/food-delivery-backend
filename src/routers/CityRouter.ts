@@ -3,7 +3,7 @@ import { GlobalMiddleware } from "../middlewares/GlobalMiddleWare";
 import { CityController } from "../controllers/CityController";
 import { CityValidators } from "../validators/CityValidators";
 
-class BannerRouter {
+class CityRouter {
   public router: Router;
 
   constructor() {
@@ -36,4 +36,4 @@ class BannerRouter {
   deleteRoutes() {}
 }
 
-export default new BannerRouter().router;
+export default new CityRouter().router;
