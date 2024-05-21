@@ -4,8 +4,8 @@ export class CityValidators {
   static addCity() {
     return [
       body("name", "City name is required").isString(),
-      body("lat", "City name is required").isNumeric(),
-      body("lng", "City name is required").isNumeric(),
+      body("lat", "Latitude is required").isNumeric(),
+      body("lng", "Longitude name is required").isNumeric(),
     ];
   }
 }
