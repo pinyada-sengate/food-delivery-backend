@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { GlobalMiddleware } from "../middlewares/GlobalMiddleWare";
 import { AddressController } from "../controllers/AddressController";
+import { AddressValidators } from "../validators/AddressValidators";
 
 class AddressRouter {
   public router: Router;
@@ -26,7 +27,7 @@ class AddressRouter {
     this.router.post(
       "/add",
       GlobalMiddleware.auth,
-      //AddressValidators.addAddress(),
+      AddressValidators.addAddress(),
       GlobalMiddleware.checkError,
       AddressController.addAddress
     );

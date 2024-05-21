@@ -2,10 +2,18 @@ import Address from "../models/Address";
 
 export class AddressController {
   static async addAddress(req, res, next) {
-    const data = req.body;
+    const { title, address, house, lat, lng, user_id } = req.body;
     try {
-      const address = await new Address(data).save();
-      res.send(address);
+      const addressData = {
+        user_id,
+        title,
+        address,
+        house,
+        lat,
+        lng,
+      };
+      const addressDoc = await new Address(addressData).save();
+      res.send(addressDoc);
     } catch (e) {
       next(e);
     }
