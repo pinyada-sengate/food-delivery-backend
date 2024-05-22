@@ -37,7 +37,13 @@ class AddressRouter {
 
   putRoutes() {}
 
-  deleteRoutes() {}
+  deleteRoutes() {
+    this.router.delete(
+      "/delete/:id",
+      GlobalMiddleware.auth,
+      AddressController.deleteAddress
+    );
+  }
 }
 
 export default new AddressRouter().router;

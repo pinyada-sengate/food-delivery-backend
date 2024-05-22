@@ -27,4 +27,19 @@ export class AddressController {
       next(e);
     }
   }
+
+  static async deleteAddress(req, res, next) {
+    const userId = req.user.user_id;
+    try {
+      await Address.findOneAndDelete({
+        user_id: userId,
+        _id: req.params.id,
+      });
+      res.json({
+        success: true,
+      });
+    } catch (e) {
+      next(e);
+    }
+  }
 }
