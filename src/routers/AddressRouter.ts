@@ -21,6 +21,11 @@ class AddressRouter {
       GlobalMiddleware.auth,
       AddressController.getAddresses
     );
+    this.router.get(
+      "/:id",
+      GlobalMiddleware.auth,
+      AddressController.getAddressesById
+    );
   }
 
   postRoutes() {

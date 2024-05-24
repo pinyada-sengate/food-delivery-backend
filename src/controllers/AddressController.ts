@@ -42,4 +42,17 @@ export class AddressController {
       next(e);
     }
   }
+
+  static async getAddressesById(req, res, next) {
+    const userId = req.user.user_id;
+    try {
+      const address = await Address.findOne({
+        user_id: userId,
+        _id: req.params.id,
+      });
+      res.send(address);
+    } catch (e) {
+      next(e);
+    }
+  }
 }
