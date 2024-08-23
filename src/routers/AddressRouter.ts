@@ -38,7 +38,15 @@ class AddressRouter {
     );
   }
 
-  patchRoutes() {}
+  patchRoutes() {
+    this.router.patch(
+      "/edit/:id",
+      GlobalMiddleware.auth,
+      AddressValidators.editAddress(),
+      GlobalMiddleware.checkError,
+      AddressController.editAddress
+    );
+  }
 
   putRoutes() {}
 

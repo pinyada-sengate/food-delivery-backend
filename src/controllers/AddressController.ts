@@ -55,4 +55,36 @@ export class AddressController {
       next(e);
     }
   }
+
+  static async editAddress(req, res, next) {
+    const userId = req.user.user_id;
+    const data = req.body;
+    try {
+      const address = await Address.findOne(
+        {
+          user_id: userId,
+          _id: req.params.id,
+        },
+        {
+          title: data.title,
+          address: data.address,
+          house: data.house,
+          lat: data.lat,
+          lng: data.lng,
+          updated_at: new Date(),
+        },
+        {
+          new: true,
+        }
+      );
+
+      if (address) {
+        res.send(address);
+      } else {
+        throw new Error("address does not exist");
+      }
+    } catch (e) {
+      next(e);
+    }
+  }
 }
