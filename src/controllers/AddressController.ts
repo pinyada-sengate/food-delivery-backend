@@ -87,4 +87,20 @@ export class AddressController {
       next(e);
     }
   }
+
+  static async checkAddress(req, res, next) {
+    const userId = req.user.user_id;
+    const data = req.query;
+    console.log(data);
+    try {
+      const address = await Address.findOne({
+        user_id: userId,
+        lat: data.lat,
+        lng: data.lng,
+      });
+      res.send(address);
+    } catch (e) {
+      next(e);
+    }
+  }
 }

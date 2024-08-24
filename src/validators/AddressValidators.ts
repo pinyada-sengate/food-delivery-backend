@@ -1,4 +1,4 @@
-import { body } from "express-validator";
+import { body, query } from "express-validator";
 
 export class AddressValidators {
   static addAddress() {
@@ -36,6 +36,13 @@ export class AddressValidators {
             throw new Error("Not the same user");
           }
         }),
+    ];
+  }
+
+  static checkAddress() {
+    return [
+      query("lat", "Latitude is required").isNumeric(),
+      query("lng", "Longitude is required").isNumeric(),
     ];
   }
 }
