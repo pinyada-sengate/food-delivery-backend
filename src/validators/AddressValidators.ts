@@ -45,4 +45,8 @@ export class AddressValidators {
       query("lng", "Longitude is required").isNumeric(),
     ];
   }
+
+  static getLimitedAddresses() {
+    return [query("limit", "Limit is required").isNumeric()];
+  }
 }

@@ -22,6 +22,13 @@ class AddressRouter {
       AddressController.getAddresses
     );
     this.router.get(
+      "/getLimitedAddresses",
+      GlobalMiddleware.auth,
+      AddressValidators.getLimitedAddresses(),
+      GlobalMiddleware.checkError,
+      AddressController.getLimitedAddresses
+    );
+    this.router.get(
       "/checkAddress",
       GlobalMiddleware.auth,
       AddressValidators.checkAddress(),
