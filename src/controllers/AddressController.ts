@@ -28,6 +28,16 @@ export class AddressController {
     }
   }
 
+  static async getLimitedAddresses(req, res, next) {
+    const limit = req.query.limit;
+    try {
+      const addresses = await Address.find({}).limit(limit);
+      res.send(addresses);
+    } catch (e) {
+      next(e);
+    }
+  }
+
   static async deleteAddress(req, res, next) {
     const userId = req.user.user_id;
     try {

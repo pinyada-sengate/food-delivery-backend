@@ -25,7 +25,7 @@ class AddressRouter {
       "/checkAddress",
       GlobalMiddleware.auth,
       AddressValidators.checkAddress(),
-      //GlobalMiddleware.checkError,
+      GlobalMiddleware.checkError,
       AddressController.checkAddress
     );
     this.router.get(
