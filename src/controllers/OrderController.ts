@@ -27,4 +27,14 @@ export class OrderController {
       next(e);
     }
   }
+
+  static async getUserOrders(req, res, next) {
+    const userId = req.user.user_id;
+    try {
+      const orders = await Order.find({ user_id: userId });
+      res.send(orders);
+    } catch (e) {
+      next(e);
+    }
+  }
 }

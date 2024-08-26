@@ -15,7 +15,13 @@ class OrderRouter {
     this.deleteRoutes();
   }
 
-  getRoutes() {}
+  getRoutes() {
+    this.router.get(
+      "/userOrders",
+      GlobalMiddleware.auth,
+      OrderController.getUserOrders
+    );
+  }
 
   postRoutes() {
     this.router.post(
