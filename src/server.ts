@@ -2,6 +2,7 @@ import * as express from "express";
 import * as mongoose from "mongoose";
 import * as bodyParser from "body-parser";
 import * as cors from "cors";
+import * as dotenv from "dotenv";
 
 import { getEnviromentVariables } from "./environments/environment";
 import UserRouter from "./routers/UserRouter";
@@ -24,9 +25,14 @@ export class Server {
   }
 
   setConfigs() {
+    this.dotenvConfigs();
     this.connectMongoDB();
     this.allowCors();
     this.configureBodyParser();
+  }
+
+  dotenvConfigs() {
+    dotenv.config({ path: ".env" });
   }
 
   connectMongoDB() {
