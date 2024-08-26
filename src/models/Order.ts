@@ -5,6 +5,7 @@ const orderSchema = new mongoose.Schema({
   user_id: { type: mongoose.Types.ObjectId, required: true },
   restaurant_id: { type: mongoose.Types.ObjectId, required: true },
   order: { type: String, required: true },
+  instruction: { type: String },
   address: { type: Object, require: true },
   total: { type: Number, require: true },
   delivery_fee: { type: Number, require: true },

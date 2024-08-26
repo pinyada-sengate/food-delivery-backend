@@ -17,7 +17,15 @@ class OrderRouter {
 
   getRoutes() {}
 
-  postRoutes() {}
+  postRoutes() {
+    this.router.post(
+      "/create",
+      GlobalMiddleware.auth,
+      OrderValidators.placeOrder(),
+      GlobalMiddleware.checkError,
+      OrderController.placeOrder
+    );
+  }
 
   patchRoutes() {}
 
