@@ -11,6 +11,7 @@ import RestaurantRouter from "./routers/RestaurantRouter";
 import CategoryRouter from "./routers/CategoryRouter";
 import ItemRouter from "./routers/ItemRouter";
 import AddressRouter from "./routers/AddressRouter";
+import OrderRouter from "./routers/OrderRouter";
 
 export class Server {
   public app: express.Application = express();
@@ -55,6 +56,7 @@ export class Server {
     this.app.use("/api/category", CategoryRouter);
     this.app.use("/api/item", ItemRouter);
     this.app.use("/api/address", AddressRouter);
+    this.app.use("/api/order", OrderRouter);
   }
 
   error404Handler() {
