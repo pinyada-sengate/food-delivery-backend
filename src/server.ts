@@ -2,7 +2,6 @@ import * as express from "express";
 import * as mongoose from "mongoose";
 import * as bodyParser from "body-parser";
 import * as cors from "cors";
-import * as dotenv from "dotenv";
 
 import { getEnviromentVariables } from "./environments/environment";
 import UserRouter from "./routers/UserRouter";
@@ -13,6 +12,7 @@ import CategoryRouter from "./routers/CategoryRouter";
 import ItemRouter from "./routers/ItemRouter";
 import AddressRouter from "./routers/AddressRouter";
 import OrderRouter from "./routers/OrderRouter";
+import { Utils } from "./utils/Utils";
 
 export class Server {
   public app: express.Application = express();
@@ -32,10 +32,11 @@ export class Server {
   }
 
   dotenvConfigs() {
-    dotenv.config({ path: ".env" });
+    Utils.dotenvConfigs();
   }
 
   connectMongoDB() {
+    console.log(getEnviromentVariables().mongoURI);
     mongoose.connect(getEnviromentVariables().mongoURI).then(() => {
       console.log("Connected to mongodb");
     });
